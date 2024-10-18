@@ -16,6 +16,9 @@ def main():
 
     # Reset button
     if st.button("Reset"):
+        st.session_state.num1 = 0.0
+        st.session_state.num2 = 0.0
+        st.session_state.operation = '+'
         st.experimental_rerun()
 
     # Calculate the result based on the selected operation
@@ -47,7 +50,15 @@ def main():
         st.success(f"The result is: {result}")
 
     # Footnote
-    st.markdown("**By KB, thanks to Aspire Pakistan**")
+    st.markdown("**By KB, thanks to Aspire Pak**")
 
 if __name__ == "__main__":
+    # Initialize session state variables if not already set
+    if 'num1' not in st.session_state:
+        st.session_state.num1 = 0.0
+    if 'num2' not in st.session_state:
+        st.session_state.num2 = 0.0
+    if 'operation' not in st.session_state:
+        st.session_state.operation = '+'
+
     main()
