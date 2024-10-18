@@ -14,51 +14,42 @@ def main():
         'Power', 'Square Root', 'Logarithm', 'Sine', 'Cosine', 'Tangent'
     ])
 
-    # Reset button
-    if st.button("Reset"):
-        st.session_state.num1 = 0.0
-        st.session_state.num2 = 0.0
-        st.session_state.operation = '+'
-        st.experimental_rerun()
+    # Buttons for calculation and reset
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        if st.button("Calculate"):
+            result = calculate(num1, num2, operation)
+            st.success(f"The result is: {result}")
 
-    # Calculate the result based on the selected operation
-    if st.button("Calculate"):
-        if operation == '+':
-            result = num1 + num2
-        elif operation == '-':
-            result = num1 - num2
-        elif operation == '*':
-            result = num1 * num2
-        elif operation == '/':
-            if num2 != 0:
-                result = num1 / num2
-            else:
-                result = "Error! Division by zero."
-        elif operation == 'Power':
-            result = num1 ** num2
-        elif operation == 'Square Root':
-            result = math.sqrt(num1) if num1 >= 0 else "Error! Negative number."
-        elif operation == 'Logarithm':
-            result = math.log(num1) if num1 > 0 else "Error! Logarithm of non-positive number."
-        elif operation == 'Sine':
-            result = math.sin(math.radians(num1))
-        elif operation == 'Cosine':
-            result = math.cos(math.radians(num1))
-        elif operation == 'Tangent':
-            result = math.tan(math.radians(num1))
-
-        st.success(f"The result is: {result}")
+    with col2:
+        if st.button("Reset"):
+            st.experimental_rerun()
 
     # Footnote
     st.markdown("**By KB, thanks to Aspire Pak**")
 
-if __name__ == "__main__":
-    # Initialize session state variables if not already set
-    if 'num1' not in st.session_state:
-        st.session_state.num1 = 0.0
-    if 'num2' not in st.session_state:
-        st.session_state.num2 = 0.0
-    if 'operation' not in st.session_state:
-        st.session_state.operation = '+'
+def calculate(num1, num2, operation):
+    if operation == '+':
+        return num1 + num2
+    elif operation == '-':
+        return num1 - num2
+    elif operation == '*':
+        return num1 * num2
+    elif operation == '/':
+        return "Error! Division by zero." if num2 == 0 else num1 / num2
+    elif operation == 'Power':
+        return num1 ** num2
+    elif operation == 'Square Root':
+        return "Error! Negative number." if num1 < 0 else math.sqrt(num1)
+    elif operation == 'Logarithm':
+        return "Error! Logarithm of non-positive number." if num1 <= 0 else math.log(num1)
+    elif operation == 'Sine':
+        return math.sin(math.radians(num1))
+    elif operation == 'Cosine':
+        return math.cos(math.radians(num1))
+    elif operation == 'Tangent':
+        return math.tan(math.radians(num1))
 
+if __name__ == "__main__":
     main()
