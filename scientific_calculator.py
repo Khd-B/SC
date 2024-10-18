@@ -4,27 +4,34 @@ import math
 def main():
     st.title("Scientific Calculator")
 
+    # Session state for inputs
+    if 'num1' not in st.session_state:
+        st.session_state.num1 = 0.0
+    if 'num2' not in st.session_state:
+        st.session_state.num2 = 0.0
+    if 'operation' not in st.session_state:
+        st.session_state.operation = '+'
+
     # Input fields for numbers
-    num1 = st.number_input("Enter the first number:", value=0.0)
-    num2 = st.number_input("Enter the second number:", value=0.0)
+    st.session_state.num1 = st.number_input("Enter the first number:", value=st.session_state.num1)
+    st.session_state.num2 = st.number_input("Enter the second number:", value=st.session_state.num2)
 
     # Dropdown menu for operations
-    operation = st.selectbox("Select an operation:", [
+    st.session_state.operation = st.selectbox("Select an operation:", [
         '+', '-', '*', '/', 
         'Power', 'Square Root', 'Logarithm', 'Sine', 'Cosine', 'Tangent'
-    ])
+    ], index=0)
 
-    # Buttons for calculation and reset
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        if st.button("Calculate"):
-            result = calculate(num1, num2, operation)
-            st.success(f"The result is: {result}")
+    # Calculate result
+    if st.button("Calculate"):
+        result = calculate(st.session_state.num1, st.session_state.num2, st.session_state.operation)
+        st.success(f"The result is: {result}")
 
-    with col2:
-        if st.button("Reset"):
-            st.experimental_rerun()
+    # Clear button
+    if st.button("Clear"):
+        st.session_state.num1 = 0.0
+        st.session_state.num2 = 0.0
+        st.session_state.operation = '+'
 
     # Footnote
     st.markdown("**By KB, thanks to Aspire Pak**")
