@@ -50,18 +50,23 @@ def calculate():
         st.session_state.current_input = ''
 
 def main():
-    st.title("Scientific Calculator")
+    st.title("Interactive Scientific Calculator")
 
     # Display current input and result
-    st.write("Current Input: ", st.session_state.current_input)
-    st.write("Result: ", st.session_state.result)
+    st.write("**Current Input:** ", st.session_state.current_input)
+    st.write("**Result:** ", st.session_state.result)
 
-    # Number buttons
+    # Create buttons for numbers and decimal
     cols = st.columns(3)
     for i in range(1, 10):
         with cols[(i-1) % 3]:
             if st.button(str(i)):
                 press(i)
+
+    # Decimal button
+    if st.button('.'):
+        if '.' not in st.session_state.current_input:
+            press('.')
 
     # Zero button
     if st.button('0'):
