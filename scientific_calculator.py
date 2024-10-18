@@ -28,7 +28,7 @@ def main():
         st.success(f"The result is: {result}")
 
     # Clear button
-    if st.button("Clear"):
+    if st.button("Reset"):
         st.session_state.num1 = 0.0
         st.session_state.num2 = 0.0
         st.session_state.operation = '+'
